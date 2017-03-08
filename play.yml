@@ -1,0 +1,20 @@
+---
+- hosts: remote
+  tasks:
+    - name: Update repo
+      git: 
+        repo={{item.repo}}
+        dest={{apps_base_path}}/{{item.name}}
+        update=yes
+      register: commit
+      become: true
+      become_user: "{{apps_user}}"
+      with_items: "{{apps}}"
+
+    - name: Restart service
+      supervisorctl:
+        name={{item.item.name}}
+        state=restarted
+      with_items: "{{commit.results}}"
+      when: item.before != item.after
+

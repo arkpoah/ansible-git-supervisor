@@ -1,0 +1,5 @@
+apps_base_path: "/app/base/path"
+apps_user: user
+apps:
+  - {name: 'app_name1', 'repo': 'repo_url.git'}
+  - {name: 'app_name2', 'repo': 'repo_url.git'}
